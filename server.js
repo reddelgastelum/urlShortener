@@ -26,18 +26,19 @@ app.get('/new/*', function (req, res) {
   var q = url.parse(adr, true);
   if ((q.protocol == 'https:' || q.protocol == 'http:') && (q.slashes == true)) {
     request(adr, function(err, response, body) {
-      console.log('We are in');
-      if (err) throw err;
-      if (response.statusCode == 200) {
-        console.log(true);
-      } else {
-        console.log(false);
+      console.log(err);
+      if (err.code == 'ENOTFOUND') {
+        res.send({error: 'Not a valid url.'});
       }
+      
+      result.original_url = adr;
+      
+      res.send(result);
     });
     
     console.log('After request');
   } else {
-    console.log(false);
+    res.send({error: 'Not a valid url.'});
   }
   
 });
