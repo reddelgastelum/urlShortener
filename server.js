@@ -4,8 +4,9 @@
 // init project
 var express = require('express');
 var request = require('request');
-var url = require('url');
 var mongoose = require('mongoose');
+var url = require('url');
+var Url = require('./models/url');
 var app = express();
 
 // Mongodb
@@ -34,9 +35,11 @@ app.get('/new/*', function (req, res) {
       result.original_url = adr;
       result.short_url = Math.floor(Math.random() * 10000 + 1);
       
-      
-      
-      res.send(result);
+      var u = new Url(result);
+      u.save(function(err, url) {
+        console.log(url);
+        res.send(result);
+      });
     });
     
     console.log('After request');
@@ -45,6 +48,8 @@ app.get('/new/*', function (req, res) {
   }
   
 });
+
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
