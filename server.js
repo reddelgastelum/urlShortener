@@ -4,7 +4,7 @@
 // init project
 var express = require('express');
 var request = require('request');
-var https = require('https');
+var url = require('url');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -22,11 +22,13 @@ app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/new/*', function (req, res) {
   var result = {};
-  var url = req.params[0];
-  https.get(url, function(response) {
-    
-  });
-  
+  var adr = req.params[0];
+  var q = url.parse(adr, true);
+  if ((q.protocol == 'https:' || q.protocol == 'http:') && (q.slashes == true)) {
+    request(adr, function(err))
+  } else {
+    console.log(false);
+  }
   
 });
 
