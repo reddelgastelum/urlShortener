@@ -25,7 +25,17 @@ app.get('/new/*', function (req, res) {
   var adr = req.params[0];
   var q = url.parse(adr, true);
   if ((q.protocol == 'https:' || q.protocol == 'http:') && (q.slashes == true)) {
-    request(adr, function(err))
+    request(adr, function(err, response, body) {
+      console.log('We are in');
+      if (err) throw err;
+      if (response.statusCode == 200) {
+        console.log(true);
+      } else {
+        console.log(false);
+      }
+    });
+    
+    console.log('After request');
   } else {
     console.log(false);
   }
