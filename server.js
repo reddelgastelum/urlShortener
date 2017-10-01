@@ -27,11 +27,12 @@ app.get('/new/*', function (req, res) {
   if ((q.protocol == 'https:' || q.protocol == 'http:') && (q.slashes == true)) {
     request(adr, function(err, response, body) {
       console.log(err);
-      if (err.code == 'ENOTFOUND') {
-        res.send({error: 'Not a valid url.'});
+      if (err) {
+        res.send({error: 'Not a valid url..'});
       }
       
       result.original_url = adr;
+      result.short_url = Math.floor(Math.random())
       
       res.send(result);
     });
