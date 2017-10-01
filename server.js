@@ -4,6 +4,7 @@
 // init project
 var express = require('express');
 var request = require('request');
+var https = require('https');
 var mongoose = require('mongoose');
 var app = express();
 
@@ -22,14 +23,8 @@ app.use(express.static('public'));
 app.get('/new/*', function (req, res) {
   var result = {};
   var url = req.params[0];
-  request(url, function(err, response, body) {
-    if (response.statusCode == 200) {
-      result.url = url;
-    }
-    if (response == undefined) {
-      result.err = 'Use a valid url.';
-    }
-    res.send(result);
+  https.get(url, function(response) {
+    
   });
   
   
