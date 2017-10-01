@@ -49,7 +49,12 @@ app.get('/new/*', function (req, res) {
   
 });
 
-
+app.get('/:short_url', function(req, res) {
+  Url.find({short_url:req.params.short_url}, function(err, url) {
+    console.log(url);
+    res.send(url);
+  });
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
