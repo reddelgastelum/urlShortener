@@ -34,6 +34,8 @@ app.get('/new/*', function (req, res) {
       result.original_url = adr;
       result.short_url = Math.floor(Math.random() * 10000 + 1);
       
+      
+      
       res.send(result);
     });
     
